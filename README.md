@@ -17,8 +17,8 @@
 ## 技術結構
 
 - 前端：React + Vite
-- 後端：Express
-- 資料層：本地 JSON 檔模擬資料庫
+- 後端：Netlify Functions
+- 資料層：Netlify Blobs（本地開發可用檔案儲存）
 
 ## 啟動方式
 
@@ -39,10 +39,11 @@ npm run build
 
 ## 部署提示
 
-- 伺服器預設會把資料寫到專案根目錄下的 `data/store.json` 與 `uploads/`。
-- 若部署平台提供持久化磁碟，可設定 `STORAGE_DIR` 環境變數，讓資料與上傳圖片統一寫到同一個資料夾，例如 `/app/storage`。
+- Netlify 會將 `/api/*` 導向 Functions，並使用 Netlify Blobs 保存商品、訂單與上傳圖片。
+- 首次在 Netlify 執行 API 時，系統會自動建立預設資料。
+- 若要在本機完整模擬 Netlify 路由，建議使用 `netlify dev`。
 
 ## 注意事項
 
 - 目前沒有串接實際金流，付款流程為完整模擬。
-- `data/store.json` 會在伺服器首次啟動時自動建立並寫入種子資料。
+- 本機檔案模式下，`data/store.json` 會在伺服器首次啟動時自動建立並寫入種子資料。

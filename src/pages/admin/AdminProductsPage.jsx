@@ -84,7 +84,7 @@ export function AdminProductsPage() {
       <section className="panel panel--banner">
         <span className="eyebrow">後台商品管理</span>
         <h1>新增商品是這個平台的核心管理功能</h1>
-        <p>表單會直接寫入模擬後端資料檔，前台清單和商品頁也會即時吃到新商品。</p>
+        <p>表單會直接寫入網站資料存放區，前台清單和商品頁也會即時吃到新商品。</p>
       </section>
 
       <div className="admin-products-grid">

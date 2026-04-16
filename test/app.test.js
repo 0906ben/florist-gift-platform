@@ -13,16 +13,16 @@ function createTempDataFile(name) {
   return filePath;
 }
 
-test("data store returns seeded public products", () => {
+test("data store returns seeded public products", async () => {
   const store = createDataStore({ filePath: createTempDataFile("lazy-bloom-products") });
-  const products = store.listPublicProducts();
+  const products = await store.listPublicProducts();
 
   assert.ok(Array.isArray(products));
   assert.ok(products.length >= 5);
   assert.equal(products.every((item) => item.status === "active"), true);
 });
 
-test("data store creates a product visible in admin list", () => {
+test("data store creates a product visible in admin list", async () => {
   const store = createDataStore({ filePath: createTempDataFile("lazy-bloom-create-product") });
   const payload = {
     name: "測試白玫瑰花束",
@@ -44,18 +44,18 @@ test("data store creates a product visible in admin list", () => {
     leadTimeDays: 1
   };
 
-  const product = store.createProduct(payload);
+  const product = await store.createProduct(payload);
   assert.equal(product.name, payload.name);
 
-  const products = store.listAdminProducts();
+  const products = await store.listAdminProducts();
   assert.ok(products.some((item) => item.name === payload.name));
 });
 
-test("data store creates order and reduces stock", () => {
+test("data store creates order and reduces stock", async () => {
   const store = createDataStore({ filePath: createTempDataFile("lazy-bloom-create-order") });
-  const product = store.listPublicProducts()[0];
+  const product = (await store.listPublicProducts())[0];
 
-  const order = store.createOrder({
+  const order = await store.createOrder({
     items: [{ productId: product.id, quantity: 1 }],
     customer: {
       name: "Tester",
@@ -84,6 +84,6 @@ test("data store creates order and reduces stock", () => {
 
   assert.equal(order.items[0].productId, product.id);
 
-  const updated = store.listAdminProducts().find((item) => item.id === product.id);
+  const updated = (await store.listAdminProducts()).find((item) => item.id === product.id);
   assert.equal(updated.stock, product.stock - 1);
 });

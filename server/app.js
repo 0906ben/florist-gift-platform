@@ -47,28 +47,28 @@ export function createApp({ dataFile } = {}) {
   const app = express();
   const store = createDataStore({ filePath: dataFile });
 
-  store.ensureFile();
+  void store.ensureFile();
 
   app.use(express.json({ limit: "1mb" }));
   app.use("/uploads", express.static(uploadDir));
 
-  app.get("/api/health", (_request, response) => {
+  app.get("/api/health", async (_request, response) => {
     response.json({
       ok: true,
-      brand: store.readData().meta.brandName
+      brand: (await store.readData()).meta.brandName
     });
   });
 
-  app.get("/api/store/products", (request, response) => {
-    response.json(store.listPublicProducts(request.query));
+  app.get("/api/store/products", async (request, response) => {
+    response.json(await store.listPublicProducts(request.query));
   });
 
-  app.get("/api/store/recommendations", (request, response) => {
-    response.json(store.getRecommendations(request.query));
+  app.get("/api/store/recommendations", async (request, response) => {
+    response.json(await store.getRecommendations(request.query));
   });
 
-  app.get("/api/store/products/:identifier", (request, response) => {
-    const product = store.getProduct(request.params.identifier);
+  app.get("/api/store/products/:identifier", async (request, response) => {
+    const product = await store.getProduct(request.params.identifier);
     if (!product || product.status !== "active") {
       response.status(404).json({ error: "找不到商品" });
       return;
@@ -76,65 +76,65 @@ export function createApp({ dataFile } = {}) {
     response.json(product);
   });
 
-  app.get("/api/store/profiles", (_request, response) => {
-    response.json(store.listProfiles());
+  app.get("/api/store/profiles", async (_request, response) => {
+    response.json(await store.listProfiles());
   });
 
-  app.post("/api/store/profiles", (request, response) => {
+  app.post("/api/store/profiles", async (request, response) => {
     try {
-      const profile = store.upsertProfile(request.body);
+      const profile = await store.upsertProfile(request.body);
       response.status(201).json(profile);
     } catch (error) {
       sendError(response, error);
     }
   });
 
-  app.put("/api/store/profiles/:profileId", (request, response) => {
+  app.put("/api/store/profiles/:profileId", async (request, response) => {
     try {
-      const profile = store.upsertProfile(request.body, request.params.profileId);
+      const profile = await store.upsertProfile(request.body, request.params.profileId);
       response.json(profile);
     } catch (error) {
       sendError(response, error);
     }
   });
 
-  app.post("/api/store/orders", (request, response) => {
+  app.post("/api/store/orders", async (request, response) => {
     try {
-      const order = store.createOrder(request.body);
+      const order = await store.createOrder(request.body);
       response.status(201).json(order);
     } catch (error) {
       sendError(response, error);
     }
   });
 
-  app.get("/api/admin/summary", (_request, response) => {
-    response.json(store.getAdminSummary());
+  app.get("/api/admin/summary", async (_request, response) => {
+    response.json(await store.getAdminSummary());
   });
 
-  app.get("/api/admin/products", (request, response) => {
-    response.json(store.listAdminProducts(request.query));
+  app.get("/api/admin/products", async (request, response) => {
+    response.json(await store.listAdminProducts(request.query));
   });
 
-  app.post("/api/admin/products", (request, response) => {
+  app.post("/api/admin/products", async (request, response) => {
     try {
-      const product = store.createProduct(request.body);
+      const product = await store.createProduct(request.body);
       response.status(201).json(product);
     } catch (error) {
       sendError(response, error);
     }
   });
 
-  app.put("/api/admin/products/:productId", (request, response) => {
+  app.put("/api/admin/products/:productId", async (request, response) => {
     try {
-      const product = store.updateProduct(request.params.productId, request.body);
+      const product = await store.updateProduct(request.params.productId, request.body);
       response.json(product);
     } catch (error) {
       sendError(response, error);
     }
   });
 
-  app.get("/api/admin/orders", (_request, response) => {
-    response.json(store.listOrders());
+  app.get("/api/admin/orders", async (_request, response) => {
+    response.json(await store.listOrders());
   });
 
   app.post("/api/admin/uploads", upload.single("image"), (request, response) => {
@@ -148,17 +148,17 @@ export function createApp({ dataFile } = {}) {
     });
   });
 
-  app.patch("/api/admin/orders/:orderId", (request, response) => {
+  app.patch("/api/admin/orders/:orderId", async (request, response) => {
     try {
-      const order = store.updateOrder(request.params.orderId, request.body);
+      const order = await store.updateOrder(request.params.orderId, request.body);
       response.json(order);
     } catch (error) {
       sendError(response, error);
     }
   });
 
-  app.get("/api/admin/profiles", (_request, response) => {
-    response.json(store.listProfiles());
+  app.get("/api/admin/profiles", async (_request, response) => {
+    response.json(await store.listProfiles());
   });
 
   if (process.env.NODE_ENV === "production") {
