@@ -79,15 +79,15 @@ export function ProfilesPage() {
   }
 
   return (
-    <div className="stack-lg">
+    <div className="stack-lg profiles-page">
       <section className="panel panel--banner">
         <span className="eyebrow">她的檔案</span>
         <h1>把重要偏好和重要日期先記住</h1>
         <p>先記下她喜歡的花、偏好的色系和重要日子，下次挑花時會省下很多重新思考的時間。</p>
       </section>
 
-      <div className="two-column">
-        <section className="panel">
+      <div className="two-column profiles-page__layout">
+        <section className="panel profile-form-panel">
           <div className="section-header">
             <div>
               <span className="eyebrow">建立檔案</span>
@@ -95,8 +95,8 @@ export function ProfilesPage() {
             </div>
           </div>
 
-          <form className="stack-md" onSubmit={handleSubmit}>
-            <div className="form-grid">
+          <form className="stack-md profile-form" onSubmit={handleSubmit}>
+            <div className="form-grid profile-form__grid">
               <label className="field">
                 <span>名稱</span>
                 <input
@@ -183,7 +183,7 @@ export function ProfilesPage() {
               </label>
             </div>
 
-            <label className="field">
+            <label className="field profile-form__note">
               <span>補充備註</span>
               <textarea
                 rows="4"
@@ -193,10 +193,10 @@ export function ProfilesPage() {
               />
             </label>
 
-            <div className="stack-sm">
+            <div className="stack-sm profile-dates">
               <span className="field-label">重要日期</span>
               {draft.importantDates.map((item, index) => (
-                <div key={`${item.label}-${index}`} className="date-row">
+                <div key={`${item.label}-${index}`} className="date-row profile-date-row">
                   <input
                     value={item.label}
                     onChange={(event) => updateDate(index, "label", event.target.value)}
@@ -211,7 +211,7 @@ export function ProfilesPage() {
               ))}
             </div>
 
-            <div className="form-actions">
+            <div className="form-actions profile-form__actions">
               <button className="primary-button" disabled={submitting} type="submit">
                 {submitting ? "儲存中..." : editingId ? "更新檔案" : "新增檔案"}
               </button>
@@ -232,15 +232,19 @@ export function ProfilesPage() {
           </form>
         </section>
 
-        <section className="stack-md">
+        <section className="stack-md profile-list">
           {profiles.map((profile) => (
-            <article key={profile.id} className="panel">
-              <div className="section-header">
+            <article key={profile.id} className="panel profile-card">
+              <div className="section-header profile-card__header">
                 <div>
                   <span className="eyebrow">{profile.relationship}</span>
                   <h3>{profile.name}</h3>
                 </div>
-                <button className="ghost-button" type="button" onClick={() => hydrateProfile(profile)}>
+                <button
+                  className="ghost-button profile-card__edit"
+                  type="button"
+                  onClick={() => hydrateProfile(profile)}
+                >
                   編輯
                 </button>
               </div>
