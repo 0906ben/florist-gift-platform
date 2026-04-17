@@ -1008,8 +1008,18 @@ button {
   width: 100%;
 }
 
+.profile-form__grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.profile-form .field,
+.profile-form__note {
+  grid-column: 1 / -1;
+}
+
 .profile-date-row {
-  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .profile-card__header {
@@ -1417,12 +1427,6 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .profile-form__grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  .profile-date-row,
   .profile-card__header {
     grid-template-columns: 1fr;
   }
