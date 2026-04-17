@@ -43,6 +43,46 @@ npm run build
 - 首次在 Netlify 執行 API 時，系統會自動建立預設資料。
 - 若要在本機完整模擬 Netlify 路由，建議使用 `netlify dev`。
 
+## 協作背景與固定要求
+
+這個專案已經決定以 Netlify 為唯一部署目標，請後續所有設計或功能調整都以 Netlify 相容為前提，不要再改回需要長駐 Node 伺服器或本機持久化磁碟的做法。
+
+- GitHub repository：`https://github.com/0906ben/florist-gift-platform.git`
+- 主要部署流程：push 到 `main` 分支後，由 Netlify 自動重新部署
+- Netlify build command：`npm run build`
+- Netlify publish directory：`dist`
+- Netlify functions directory：`netlify/functions`
+- 資料與圖片儲存：Netlify Blobs
+- 目前 `/admin` 沒有登入保護，適合 demo / 作品展示，不適合正式公開營運
+
+未來如果在其他對話中請人修改這個專案，請一律把需求理解成：
+
+- 直接修改實際程式，不只提供建議
+- 完成後要簡要說明改了什麼
+- 完成後一定要附上可直接複製貼上的 Git 終端機指令
+- Git 指令要以目前這個專案路徑與 `main` 分支為準
+- 變更若影響部署，需一併考慮 Netlify 相容性
+
+建議每次修改完成後，提供這組推送指令：
+
+```bash
+cd "/Users/ben0906/SynologyDrive/正在作業/1"
+git status
+git add .
+git commit -m "簡短描述這次修改"
+git push origin main
+```
+
+如果要先檢查變更內容，再決定是否推送，可先提供：
+
+```bash
+cd "/Users/ben0906/SynologyDrive/正在作業/1"
+git status
+git diff --stat
+```
+
+若是在新的對話中接手這個專案，請優先沿用以上背景，不要假設這是尚未部署的平台原型，也不要把部署目標改成 Railway、Vercel、傳統 VPS 或其他方案，除非使用者明確要求。
+
 ## 注意事項
 
 - 目前沒有串接實際金流，付款流程為完整模擬。

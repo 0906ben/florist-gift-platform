@@ -974,6 +974,14 @@ button {
   margin-bottom: 24px;
 }
 
+.admin-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
 .metric-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -999,10 +1007,6 @@ button {
 .order-list-item.active {
   border-color: rgba(124, 47, 85, 0.32);
   background: rgba(255, 245, 247, 0.94);
-}
-
-.admin-products-grid {
-  grid-template-columns: 1.05fr 1fr;
 }
 
 .image-upload-row {
@@ -1045,6 +1049,47 @@ button {
   border-bottom: 1px solid rgba(90, 71, 79, 0.08);
   text-align: left;
   vertical-align: top;
+}
+
+.editor-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(29, 22, 26, 0.38);
+  backdrop-filter: blur(8px);
+}
+
+.editor-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(720px, 100vw);
+  height: 100%;
+  overflow-y: auto;
+  padding: 24px;
+  background: rgba(249, 245, 239, 0.98);
+  border-left: 1px solid rgba(90, 71, 79, 0.12);
+  box-shadow: -14px 0 34px rgba(29, 22, 26, 0.14);
+}
+
+.editor-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.editor-drawer .stack-md {
+  gap: 18px;
+}
+
+.editor-drawer .field {
+  grid-column: span 6;
+}
+
+.editor-drawer .field--wide {
+  grid-column: span 12;
 }
 
 .profile-card-grid {
@@ -1125,7 +1170,8 @@ button {
 
   .admin-topbar,
   .brand-banner,
-  .announcement-bar {
+  .announcement-bar,
+  .admin-toolbar {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -1272,6 +1318,11 @@ button {
   .announcement-bar {
     gap: 8px;
     font-size: 0.74rem;
+  }
+
+  .editor-drawer {
+    width: 100vw;
+    padding: 18px;
   }
 
   .brand-mark strong {
