@@ -46,20 +46,25 @@ export function StoreLayout() {
         <div className="site-header__top">
           <Link className="brand-mark" to="/">
             <span className="brand-mark__badge">LB</span>
-            <div>
+            <div className="brand-mark__copy">
               <strong>Lazy Bloom</strong>
               <span>Floral House</span>
             </div>
           </Link>
 
           <button
-            className="nav-toggle"
+            className={`nav-toggle ${isNavOpen ? "nav-toggle--open" : ""}`}
             type="button"
             onClick={() => setIsNavOpen((current) => !current)}
             aria-expanded={isNavOpen}
             aria-controls="store-navigation"
+            aria-label={isNavOpen ? "收合選單" : "展開選單"}
           >
-            {isNavOpen ? "收合選單" : "展開選單"}
+            <span className="nav-toggle__icon" aria-hidden="true">
+              <span className="nav-toggle__bar" />
+              <span className="nav-toggle__bar" />
+              <span className="nav-toggle__bar" />
+            </span>
           </button>
         </div>
 
@@ -143,20 +148,25 @@ export function AdminLayout() {
         <div className="admin-sidebar__top">
           <Link className="brand-mark brand-mark--admin" to="/">
             <span className="brand-mark__badge">LB</span>
-            <div>
+            <div className="brand-mark__copy">
               <strong>Lazy Bloom Ops</strong>
               <span>模擬後台工作台</span>
             </div>
           </Link>
 
           <button
-            className="nav-toggle"
+            className={`nav-toggle ${isNavOpen ? "nav-toggle--open" : ""}`}
             type="button"
             onClick={() => setIsNavOpen((current) => !current)}
             aria-expanded={isNavOpen}
             aria-controls="admin-navigation"
+            aria-label={isNavOpen ? "收合後台選單" : "展開後台選單"}
           >
-            {isNavOpen ? "收合後台選單" : "展開後台選單"}
+            <span className="nav-toggle__icon" aria-hidden="true">
+              <span className="nav-toggle__bar" />
+              <span className="nav-toggle__bar" />
+              <span className="nav-toggle__bar" />
+            </span>
           </button>
         </div>
 
