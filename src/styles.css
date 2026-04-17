@@ -989,6 +989,21 @@ button {
   min-width: 0;
 }
 
+.profile-form .field,
+.profile-form__note,
+.profile-date-row {
+  width: 100%;
+}
+
+.profile-form input,
+.profile-form select,
+.profile-form textarea,
+.profile-date-row input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
 .profile-form__note {
   width: 100%;
 }
@@ -1009,6 +1024,14 @@ button {
 
 .profile-card__edit {
   flex-shrink: 0;
+}
+
+.profile-form__actions {
+  width: 100%;
+}
+
+.profile-form__submit {
+  width: 100%;
 }
 
 .admin-shell {
@@ -1400,6 +1423,12 @@ button {
 
   .profile-form__actions {
     width: 100%;
+    gap: 10px;
+  }
+
+  .profile-form__submit {
+    border-radius: 18px;
+    min-height: 54px;
   }
 
   .section-header,
@@ -1595,6 +1624,12 @@ button {
 
   .profile-form__note textarea {
     min-height: 120px;
+  }
+
+  .profile-form__cancel,
+  .profile-form__submit {
+    width: 100%;
+    justify-content: center;
   }
 
   .profile-card__header {

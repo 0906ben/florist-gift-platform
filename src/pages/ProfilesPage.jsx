@@ -211,13 +211,11 @@ export function ProfilesPage() {
               ))}
             </div>
 
+            {message ? <p className="success-note">{message}</p> : null}
             <div className="form-actions profile-form__actions">
-              <button className="primary-button" disabled={submitting} type="submit">
-                {submitting ? "儲存中..." : editingId ? "更新檔案" : "新增檔案"}
-              </button>
               {editingId ? (
                 <button
-                  className="ghost-button"
+                  className="ghost-button profile-form__cancel"
                   type="button"
                   onClick={() => {
                     setDraft(createEmptyProfile());
@@ -227,8 +225,14 @@ export function ProfilesPage() {
                   取消編輯
                 </button>
               ) : null}
+              <button
+                className="primary-button profile-form__submit"
+                disabled={submitting}
+                type="submit"
+              >
+                {submitting ? "儲存中..." : editingId ? "更新檔案" : "新增檔案"}
+              </button>
             </div>
-            {message ? <p className="success-note">{message}</p> : null}
           </form>
         </section>
 
